@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class StudentForm extends JFrame implements ActionListener
 {
-  JLabel dl,nl,rl,yl;
+  JLabel dl,nl,rl,yl,er;
   JTextField nt,rt;
   JRadioButton r1,r2,r3;
   JTextArea ja;
@@ -18,6 +18,7 @@ public class StudentForm extends JFrame implements ActionListener
      nl = new JLabel("Name");
      rl = new JLabel("Reg No");
      yl = new JLabel("Year");
+
      nt = new JTextField(20);
      rt = new JTextField(20);
      r1 = new JRadioButton("2");
@@ -25,12 +26,12 @@ public class StudentForm extends JFrame implements ActionListener
      r3 = new JRadioButton("4");
      bg = new ButtonGroup();
      ja = new JTextArea();
-     js = new JScrollPane();
+     js = new JScrollPane(ja);
      addb = new JButton("ADD");
      clearb = new JButton("CLEAR");
      addb.addActionListener(this);
      clearb.addActionListener(this);
-     ja.add(js);
+     ja.setEditable(false);
      bg.add(r1);
      bg.add(r2);
      bg.add(r3);
@@ -47,7 +48,7 @@ public class StudentForm extends JFrame implements ActionListener
      p1.add(r3);
      p1.add(addb);
      p1.add(clearb);
-     p1.add(ja);
+     p1.add(js);
      dl.setBounds(10,10,100,20);
      nl.setBounds(10,40,50,20);
      nt.setBounds(60,40,100,20);
@@ -58,8 +59,8 @@ public class StudentForm extends JFrame implements ActionListener
      r2.setBounds(100,100,40,20);
      r3.setBounds(140,100,40,20);
      addb.setBounds(10,130,70,25);
-     clearb.setBounds(90,130,70,25);
-     ja.setBounds(200,10,100,200);
+     clearb.setBounds(90,130,90,25);
+     js.setBounds(200,10,100,200);
      add(p1);
   }
   public void actionPerformed(ActionEvent ae){
@@ -75,10 +76,10 @@ public class StudentForm extends JFrame implements ActionListener
          val+="2nd year\n";
       }else if(r2.isSelected()){
          val+="3nd year\n";
-      }if(r3.isSelected()){
+      }else if(r3.isSelected()){
          val+="3nd year\n";
       }
-      val+="########################\n";
+      val+="------------------\n";
       ja.append(val);
       addb.setEnabled(false);
 
@@ -88,6 +89,6 @@ public class StudentForm extends JFrame implements ActionListener
      StudentForm sf = new StudentForm();
      sf.setVisible(true);
      sf.setTitle("Student Form");
-     sf.setSize(400,200);
+     sf.setSize(400,300);
   }
 }
