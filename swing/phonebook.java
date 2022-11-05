@@ -1,11 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.math.BigInteger;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class phonebook extends JFrame implements ActionListener {
-    JLabel nl,cl,pl,fl,not;
+    JLabel nl,cl,pl,fl;
     JButton ib,rb;
     JTable jt;
     JScrollPane jp;
@@ -28,7 +30,6 @@ public class phonebook extends JFrame implements ActionListener {
         nt = new JTextField();
         ct = new JTextField();
         pt = new JTextField();
-        not = new JLabel("");
         model.addColumn("Name");
         model.addColumn("City");
         model.addColumn("Phone");
@@ -43,7 +44,6 @@ public class phonebook extends JFrame implements ActionListener {
         p1.add(pt);		
         p1.add(ib);
         p1.add(rb);
-        p1.add(not);
         p1.setBorder(BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Info", TitledBorder.LEFT, TitledBorder.TOP));
         p2.add(jp);
         mp.add(p1);
@@ -55,7 +55,7 @@ public class phonebook extends JFrame implements ActionListener {
         p1.setLayout(null);
         p2.setLayout(null);
         mp.setLayout(null);
-        p1.setBounds(20,10,300,150);
+        p1.setBounds(10,10,310,150);
         nl.setBounds(40,20,50,20);
         nt.setBounds(100,20,140,20);
         cl.setBounds(40,50,100,20);
@@ -64,9 +64,8 @@ public class phonebook extends JFrame implements ActionListener {
         pt.setBounds(100,80,140,20);
         ib.setBounds(100,110,80,20);
         rb.setBounds(190,110,80,20);
-        not.setBounds(20,130,100,20);
-        p2.setBounds(10,130,320,250);
-        jp.setBounds(10,35,300,200);
+        p2.setBounds(0,130,320,250);
+        jp.setBounds(10,35,310,200);
     }
 	public void actionPerformed(ActionEvent ae){
 		String cmd = ae.getActionCommand();
@@ -77,20 +76,31 @@ public class phonebook extends JFrame implements ActionListener {
 		}
 		else if (cmd.equals("INSERT")){
 			if(nt.getText().equals("")){
-				not.setText("Enter the Name");
-			}
+                JOptionPane.showMessageDialog(this,"Enter the Name field","Missing Field",JOptionPane.INFORMATION_MESSAGE);
+            }
 			else if(ct.getText().equals("")){
-				not.setText("Enter the City");
+                JOptionPane.showMessageDialog(this,"Enter the City field","Missing Field",JOptionPane.INFORMATION_MESSAGE);
 			}
 			else if(pt.getText().equals("")){
-				not.setText("Enter the Phone");
-			}
-			else {
-				not.setText("");
+                JOptionPane.showMessageDialog(this,"Enter the Phone field","Missing Field",JOptionPane.INFORMATION_MESSAGE);
+			}else if(!(isNumeric(pt.getText())||(pt.getText().charAt(0)=='+'&& isNumeric(pt.getText().substring(1))))){
+                JOptionPane.showMessageDialog(this,"Enter Only numbers (or start with '+' for country code eg. +91 ) on phone field","Missing Field",JOptionPane.INFORMATION_MESSAGE);
+            }else {
 				model.addRow(new Object[] { nt.getText(), ct.getText(), pt.getText()});
 			}
 		}
 	}
+    public static boolean isNumeric(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            new BigInteger(str);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
 
     public static void main(String argv[]){
         phonebook pb = new phonebook();
