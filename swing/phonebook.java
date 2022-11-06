@@ -73,6 +73,7 @@ public class phonebook extends JFrame implements ActionListener {
 			nt.setText("");
             ct.setText("");
             pt.setText("");
+            ib.setEnabled(true);
 		}
 		else if (cmd.equals("INSERT")){
 			if(nt.getText().equals("")){
@@ -87,7 +88,9 @@ public class phonebook extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this,"Enter Only numbers (or start with '+' for country code eg. +91 ) on phone field","Missing Field",JOptionPane.INFORMATION_MESSAGE);
             }else {
 				model.addRow(new Object[] { nt.getText(), ct.getText(), pt.getText()});
+                ib.setEnabled(false);
 			}
+
 		}
 	}
     public static boolean isNumeric(String str) {
